@@ -3,15 +3,18 @@ from datetime import datetime, timedelta
 
 class IdeaCategory(models.Model):
     category_name = models.CharField(max_length=30)
+    category_tag = models.CharField(max_length=30) # to narrow down to the ideas
 
     def __str__(self):
         return(self.category_name)
 
-class Ideas(models.Model):
-    idea_category = models.ForeignKey('IdeaCategory', null=True, blank=True)
-    idea_name = models.CharField(max_length = 30)
-    idea_description = models.TextField()
-    date_added = models.DateField()
+# two 0..* tables, postgres automatically makes association table
+
+class Idea(models.Model):
+    category = models.ManyToManyField(IdeaCategory)
+    name = models.CharField(max_length = 30)
+    description = models.TextField()
+    dadded = models.DateField()
 
     def __str__(self):
         return(self.idea_name)
@@ -19,7 +22,7 @@ class Ideas(models.Model):
 # two 0..* tables, postgres automatically makes association table
 
 class Customer(models.Model):
-    idea = models.ManyToManyField(Ideas, blank=True)
+    idea = models.ManyToManyField(Idea, blank=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
