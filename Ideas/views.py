@@ -3,9 +3,9 @@ from django.http import HttpResponse
 
 # Create your views here.
 def indexPageView(request):
-    return HttpResponse('<h1>Welcome to Sifty!</h1>')
+    return render(request, 'ideas/index.html')
 def aboutPageView(request):
-    return HttpResponse('About Sifty')
+    return render(request, 'ideas/about.html')
 def uploadPageView(request):
     return HttpResponse('Upload new ideas here!')
 def ideasPageView(request, fName, lName):
