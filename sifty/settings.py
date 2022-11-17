@@ -76,13 +76,13 @@ WSGI_APPLICATION = 'sifty.wsgi.application'
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'sifty',
-    'USER': 'postgres',
-    'PASSWORD': 'Flapjack1',
-    'HOST': 'localhost'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sifty',
+        'USER': 'postgres',
+        'PASSWORD': 'Flapjack1',
+        'HOST': 'localhost',
     }
-} 
+}
 
 
 # Password validation
