@@ -5,5 +5,5 @@ urlpatterns = [
     path('', indexPageView, name='index'),
     path('about/', aboutPageView, name='about'),
     path('upload/', uploadPageView, name='upload'),
-    path('ideas/<str:fName>/<str:lName>', ideasPageView, name='ideas'),
+    path('ideas/', ideasPageView, name='ideas'), #<str:fName>/<str:lName>
 ]

@@ -13,7 +13,7 @@ class IdeaCategory(models.Model):
 # two 0..* tables, postgres automatically makes association table
 
 class Idea(models.Model):
-    idea_category = models.ManyToManyField(IdeaCategory)
+    category = models.ManyToManyField(IdeaCategory)
     name = models.CharField(max_length = 30)
     description = models.TextField()
     date_added = models.DateField()
@@ -31,6 +31,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)
     phone = models.CharField(max_length=13, blank=True)
     date_joined = models.DateField(default=datetime.today, blank=True)
 
