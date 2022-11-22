@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <h1>Ideas</h1>
-<p>Welcome {{customer.first_name}} {{customer.last_name}}!</p>
+<p>Welcome {{customer.first_name|lower|capfirst}} {{customer.last_name|lower|capfirst}}!</p>
 <a href="{% url 'index' %}">Home</a>
 {% endblock %}

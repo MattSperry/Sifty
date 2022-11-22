@@ -16,7 +16,7 @@ def registerPageView(request):
             customer = form.save()
             login(request, customer)
             messages.success(request, "Registration Successful.")
-            return redirect("ideas:index")
+            return redirect("/")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = UserForm()
     return render (request=request, template_name="ideas/register.html", context={"register_form":form})
