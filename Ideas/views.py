@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Idea
+from .models import Idea, Customer
 from .forms import IdeaForm
  
 # Create your views here.
@@ -25,5 +25,10 @@ def uploadPageView(request):
     }
     return render(request, 'ideas/uploads.html', context)
 
-def ideasPageView(request):
-    return render(request, 'ideas/ideas.html') # page for after the user logs in
+def ideasPageView(request, pk):
+    customer = Customer.objects.get(id=pk)
+
+    first_name = customer.first_name
+
+    context = {'customer':customer, 'first_name':first_name}
+    return render(request, 'ideas/ideas.html', context) # page for after the user logs in

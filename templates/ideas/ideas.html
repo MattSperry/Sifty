@@ -1,4 +1,4 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <h1>Ideas</h1>
-<p>Welcome {{request.GET.fName}} {{request.GET.lName}}!</p>
+<p>Welcome {{customer.first_name}} {{customer.last_name}}!</p>
 {% endblock %}

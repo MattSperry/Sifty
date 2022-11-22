@@ -2,3 +2,8 @@
     border: solid 1px;
     margin: 20px;
 }
+
+.logo {
+  position: fixed;
+  left: 50%;
+}
