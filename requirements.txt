@@ -22,7 +22,6 @@ psycopg2==2.9.5
 pylint==2.15.6
 pylint-django==2.5.3
 pylint-plugin-utils==0.7
-pypiwin32==223
 python-dotenv==0.21.0
 requests==2.28.1
 sqlparse==0.4.3
