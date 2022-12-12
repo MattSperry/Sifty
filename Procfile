@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn Ideas.wsgi
+web: python manage.py migrate && gunicorn sifty.wsgi
