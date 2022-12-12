@@ -27,7 +27,7 @@ class Idea(models.Model):
 # two 0..* tables, postgres automatically makes association table
 
 class Customer(models.Model):
-    idea = models.ManyToManyField(Idea, blank=True)
+    idea = models.ForeignKey('Idea', null=True, blank=True, on_delete=models.SET_NULL)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
