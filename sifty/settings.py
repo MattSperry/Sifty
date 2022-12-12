@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["sifty-ideas.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://sifty-ideas.up.railway.app"]
 
 
 # Application definition
