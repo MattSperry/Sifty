@@ -1,0 +1,23 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
+{% load crispy_forms_tags %}
+<h1>Update Info</h1>
+<p>*Please add this data to get correct dietary recommendations</p>
+<br>
+<div class = "border p-3 shadow">
+    <h4>Add Data</h4>
+    <hr>
+    <form name="form" method="POST" action="{% url 'add_info' %}">
+        {% csrf_token %}
+        <label for="first_name">First Name:</label>
+        <input style="background-color: white; color: black;" class = "btn btn-success btn-block" type='text' name="first_name">
+        <br>
+        <label for="last_name">Last Name:</label>
+        <input style="background-color: white; color: black;" class = "btn btn-success btn-block" type='text' name="last_name">
+        <br>
+        <button type='submit'>Submit</button>
+    </form>
+</div>
+
+{% endblock %}

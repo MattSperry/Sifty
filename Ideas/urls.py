@@ -8,7 +8,7 @@ urlpatterns = [
     path("logout", logoutPageView, name= "logout"),
     path('about/', aboutPageView, name='about'),
     path('upload/', uploadPageView, name='upload'),
-    path('ideas/<str:pk>', ideasPageView, name='ideas'),
+    path('ideas', ideasPageView, name='ideas'),
     path('update/<str:pk>', updateIdeaPageView, name='update'),
     path('add_info/', addInfoPageView, name='add_info'),
 ]

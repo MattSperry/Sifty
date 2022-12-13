@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Idea, Customer
+from Ideas.models import Idea, Customer
 from .forms import IdeaForm, UserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -9,10 +9,13 @@ from django.contrib.auth.models import User
  
 # Create your views here.
 def indexPageView(request):
-    data = Idea.objects.all()
-    context = {
-        'ideas' : data
-    }
+    customer_ideas = Idea.objects.filter(customer = request.user.id)
+    # customer = Customer.objects.get(personID = request.user.id)
+    # first_name = customer.first_name
+    # last_name = customer.last_name
+
+    context = {'customer_ideas':customer_ideas}#, 'first_name':first_name, 'last_name':last_name}
+    
     return render(request, 'ideas/index.html', context)
 
 def registerPageView(request):
@@ -22,7 +25,7 @@ def registerPageView(request):
             customer = form.save()
             login(request, customer)
             messages.success(request, "Registration Successful.")
-            return redirect("index")
+            return redirect("add_info")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = UserForm()
     return render (request=request, template_name="ideas/register.html", context={"register_form":form})
@@ -48,16 +51,15 @@ def loginPageView(request):
 def logoutPageView(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
-	return redirect("index")
+	return redirect("login")
 
 def addInfoPageView(request):
     if request.method == "POST":
         customer = Customer()
 
-        customer.customerID = User.objects.get(id = request.user.id)
+        customer.personID = User.objects.get(id = request.user.id)
         customer.first_name = request.POST["first_name"]
         customer.last_name = request.POST["last_name"]
-        customer.date_joined = request.POST["date_joined"]
         
         customer.save()
 
@@ -104,3 +106,8 @@ def updateIdeaPageView(request, pk):
 
     context = {'form':form}
     return render(request, 'ideas/update_idea.html', context)
+
+def deleteIdeaEntry(request, idea_id):
+    entry = Idea.objects.get(idea_id = idea_id)
+    entry.delete()
+    return redirect('ideas')

@@ -8,5 +8,8 @@
 {{idea.name}}
 {{idea.description}}
 {{idea.date_added}}
+<!--<a href="{% url 'update-entries' entries.journalID %}">Update Journal Entry</a>&emsp;-->
 
+<a style="color: red;" href="{% url 'delete-idea' idea.idea_id %}">Delete Idea Entry</a>
+{%endfor%}
 {% endblock %}
