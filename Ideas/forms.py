@@ -1,11 +1,11 @@
 from django import forms
-from .models import Idea
+from .models import Idea, IdeaCategory, Customer
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
- 
-class IdeaForm(forms.ModelForm):
+
+class CategoryForm(forms.ModelForm):
     class Meta:
-        model = Idea
+        model = IdeaCategory
         fields = '__all__'
 
 class UserForm(UserCreationForm):

@@ -3,14 +3,32 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <h1>Uploads</h1>
-<a href="{% url 'index' %}">Home</a>
 <div class = "border p-3 shadow">
-    <h4>Add Data</h4>
+    <h4>Add Idea</h4>
     <hr>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form|crispy}}
-        <input class = "btn btn-success btn-block" type='submit' value = 'Add'>
-    </form>
+    <form method="POST" action='{% url 'add-idea' %}'>
+    {% csrf_token %}
+    <label name="category"> Category
+    <select name="category" type="select">
+    {% for category in categories%}
+        <option>{{category.name}}</option>
+    {%endfor%}
+    </select>
+    <br>
+    <br>
+    <label name="name">Name
+    <input type="text"  name="name">
+    <br>
+    <br>
+    <label name="description">Description
+    <input type="text"  name="description">
+    <br>
+    <br>
+    <label name="date_added">Date Added
+    <input type="date" name="date_added">
+    <br>
+    <br>
+    <button type="submit">Add Idea</submit>
+</form>
 </div>
 {% endblock %}

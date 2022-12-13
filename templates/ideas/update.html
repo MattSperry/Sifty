@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<h1>Update Your Idea</h1>
+<br><br>
+<form method="POST" action="{% url 'update-entry-submit' %}">
+    {% csrf_token %}
+    <input value="{{idea_info.id}}" hidden name="id">
+    <label name="category">
+    <select name="category" type="select" value="{{idea_info.category.name}}">
+    {% for category in categories%}
+        <option>{{category.name}}</option>
+    {%endfor%}
+    </select>
+    <label name="name">
+    <input type="text" value="{{idea_info.name}}" name="name">
+    <label name="description">
+    <input type="text" value="{{idea_info.description}}" name="description">
+    <label name="date_added">
+    <input type="date" value="{{idea_info.date_added}}" name="date_added">
+    <button type="submit">Submit Changes</submit>
+</form>
+{% endblock %}

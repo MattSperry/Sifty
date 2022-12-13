@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from Ideas.models import Idea, Customer
-from .forms import IdeaForm, UserForm
+from .models import Idea, Customer, IdeaCategory
+from .forms import UserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -9,13 +9,11 @@ from django.contrib.auth.models import User
  
 # Create your views here.
 def indexPageView(request):
-    customer_ideas = Idea.objects.filter(customer = request.user.id)
-    # customer = Customer.objects.get(personID = request.user.id)
-    # first_name = customer.first_name
-    # last_name = customer.last_name
-
-    context = {'customer_ideas':customer_ideas}#, 'first_name':first_name, 'last_name':last_name}
-    
+    data = Idea.objects.all()
+    context = {
+        'ideas' : data,
+        'currentUser': Customer.objects.get(personID  = request.user.id),
+    }
     return render(request, 'ideas/index.html', context)
 
 def registerPageView(request):
@@ -70,19 +68,33 @@ def aboutPageView(request):
     return render(request, 'ideas/about.html')
 
 def uploadPageView(request):
-    data = Idea.objects.all()
-    if request.method == 'POST':
-        form = IdeaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    else:
-        form = IdeaForm()
-    context = {
-        'data': data,
-        'form': form,
-    }
+    # data = Idea.objects.all()
+    # if request.method == 'POST':
+    #     request.POST['customer'] = Customer.objects.get(personID = request.user.id)
+    #     form = IdeaForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('index')
+    # else:
+    #     form = IdeaForm()
+    # context = {
+    #     'data': data,
+    #     'form': form,
+    # }
+    categories = IdeaCategory.objects.all()
+    context = {'categories':categories}
     return render(request, 'ideas/uploads.html', context)
+
+def addIdeaPageView(request):
+    new_idea = Idea()
+    new_idea.customer = User.objects.get(id = request.user.id)
+    category = IdeaCategory.objects.get(name = request.POST.get('category', False))
+    new_idea.category = category
+    new_idea.name = request.POST['name']
+    new_idea.description = request.POST['description']
+    new_idea.date_added = request.POST['date_added']
+    new_idea.save()
+    return redirect('index')
 
 def ideasPageView(request):
     customer_ideas = Idea.objects.filter(customer = request.user.id)
@@ -94,20 +106,31 @@ def ideasPageView(request):
     
     return render(request, 'ideas/ideas.html', context) # page for after the user logs in
 
-def updateIdeaPageView(request, pk):
-    idea = Idea.objects.get(id=pk)
-    form = IdeaForm(instance=idea)
+def updateIdeaPageView(request, idea_id):
+    idea_info = Idea.objects.get(id=idea_id)
+    categories = IdeaCategory.objects.all()
 
-    if request.method == 'POST':
-        form = IdeaForm(request.POST, instance=idea)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-
-    context = {'form':form}
-    return render(request, 'ideas/update_idea.html', context)
+    context = {'idea_info':idea_info, 'categories':categories}
+    return render(request,'ideas/update.html',context)
 
 def deleteIdeaEntry(request, idea_id):
-    entry = Idea.objects.get(idea_id = idea_id)
+    entry = Idea.objects.get(id = idea_id)
     entry.delete()
-    return redirect('ideas')
+    return redirect('index')
+
+def updateEntry(request):
+    if request.method == 'POST':
+        idea = Idea.objects.get(id = request.POST['id'])
+
+        category = IdeaCategory.objects.get(name = request.POST['category'])
+
+        idea.category = category
+        idea.name = request.POST['name']
+        idea.description = request.POST['description']
+        idea.date_added = request.POST['date_added']
+
+        idea.save()
+
+        return redirect('index')
+
+    return redirect('index')

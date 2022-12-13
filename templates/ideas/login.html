@@ -6,6 +6,10 @@
 
 <!--Login--> 
 <div class="container py-5">
+  <h1>Welcome to Sifty!</h1>
+  <br>
+  <p>Please login to view the ideas</p>
+  <br>
   <h1>Login</h1>
   <form method="POST">
     {% csrf_token %}
@@ -14,6 +18,5 @@
   </form>
   <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
 </div>
-
 
 {% endblock %}
